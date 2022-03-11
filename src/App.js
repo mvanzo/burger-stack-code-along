@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react';
+import BurgerPane from './BurgerPane';
+import IngredientList from './IngredientList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    burgerIngredients: []
+  } 
+
+  clearBurger = () => {
+    this.setState({burgerIngredients:[]})
+  }
+
+  addToBurger = (ingredient) => {
+    let newBurgerList = this.state.burgerIngredients
+    newBurgerList.unshift(ingredient)
+    this.setState({
+      burgerIngredients: newBurgerList
+    })
+  }
+
+  render() { 
+    return (
+      <>
+      <h1>BurgerStacker</h1>
+      <main>
+        <IngredientList 
+          ingredients={this.props.ingredientsList}
+          addToBurger={this.addToBurger}
+        />
+        <BurgerPane 
+          burgerIngredients={this.state.burgerIngredients}
+          clearBurger={this.clearBurger}
+        />
+      </main>
+      </>
+    );
+  }
 }
-
+ 
 export default App;
